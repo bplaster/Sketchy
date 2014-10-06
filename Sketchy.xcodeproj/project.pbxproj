@@ -1,0 +1,475 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1A3D241319E1ECAE00845A1C /* GalleryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3D241119E1ECAE00845A1C /* GalleryTableViewController.m */; };
+		1A3D241619E1F16400845A1C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3D241519E1F16300845A1C /* AssetsLibrary.framework */; };
+		1A3D241A19E2150000845A1C /* GalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3D241819E2150000845A1C /* GalleryViewController.m */; };
+		1A3D241B19E2150000845A1C /* GalleryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A3D241919E2150000845A1C /* GalleryViewController.xib */; };
+		1A3D241D19E232D300845A1C /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A3D241C19E232D300845A1C /* placeholder.png */; };
+		1A764AF719E04BB900EA6EBF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A764AF619E04BB900EA6EBF /* main.m */; };
+		1A764AFA19E04BB900EA6EBF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A764AF919E04BB900EA6EBF /* AppDelegate.m */; };
+		1A764AFD19E04BB900EA6EBF /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A764AFC19E04BB900EA6EBF /* ViewController.m */; };
+		1A764B0019E04BB900EA6EBF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1A764AFE19E04BB900EA6EBF /* Main.storyboard */; };
+		1A764B0219E04BB900EA6EBF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1A764B0119E04BB900EA6EBF /* Images.xcassets */; };
+		1A764B0519E04BB900EA6EBF /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A764B0319E04BB900EA6EBF /* LaunchScreen.xib */; };
+		1A764B1119E04BBA00EA6EBF /* SketchyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A764B1019E04BBA00EA6EBF /* SketchyTests.m */; };
+		1A764B1B19E04C4A00EA6EBF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A764B1A19E04C4A00EA6EBF /* UIKit.framework */; };
+		1A764B1D19E04C5900EA6EBF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A764B1C19E04C5900EA6EBF /* CoreGraphics.framework */; };
+		1A764B1F19E04CA300EA6EBF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A764B1E19E04CA300EA6EBF /* Foundation.framework */; };
+		1A764B2319E04E7300EA6EBF /* SketchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A764B2119E04E7300EA6EBF /* SketchViewController.m */; };
+		1A764B2419E04E7300EA6EBF /* SketchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A764B2219E04E7300EA6EBF /* SketchViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		1A764B0B19E04BBA00EA6EBF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1A764AE919E04BB800EA6EBF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1A764AF019E04BB900EA6EBF;
+			remoteInfo = Sketchy;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		1A3D241019E1ECAD00845A1C /* GalleryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryTableViewController.h; sourceTree = "<group>"; };
+		1A3D241119E1ECAE00845A1C /* GalleryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryTableViewController.m; sourceTree = "<group>"; };
+		1A3D241519E1F16300845A1C /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		1A3D241719E2150000845A1C /* GalleryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryViewController.h; sourceTree = "<group>"; };
+		1A3D241819E2150000845A1C /* GalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryViewController.m; sourceTree = "<group>"; };
+		1A3D241919E2150000845A1C /* GalleryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryViewController.xib; sourceTree = "<group>"; };
+		1A3D241C19E232D300845A1C /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		1A764AF119E04BB900EA6EBF /* Sketchy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sketchy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A764AF519E04BB900EA6EBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A764AF619E04BB900EA6EBF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1A764AF819E04BB900EA6EBF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		1A764AF919E04BB900EA6EBF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		1A764AFB19E04BB900EA6EBF /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		1A764AFC19E04BB900EA6EBF /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		1A764AFF19E04BB900EA6EBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		1A764B0119E04BB900EA6EBF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		1A764B0419E04BB900EA6EBF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		1A764B0A19E04BBA00EA6EBF /* SketchyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SketchyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A764B0F19E04BBA00EA6EBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1A764B1019E04BBA00EA6EBF /* SketchyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SketchyTests.m; sourceTree = "<group>"; };
+		1A764B1A19E04C4A00EA6EBF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		1A764B1C19E04C5900EA6EBF /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		1A764B1E19E04CA300EA6EBF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		1A764B2019E04E7300EA6EBF /* SketchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SketchViewController.h; sourceTree = "<group>"; };
+		1A764B2119E04E7300EA6EBF /* SketchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SketchViewController.m; sourceTree = "<group>"; };
+		1A764B2219E04E7300EA6EBF /* SketchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SketchViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1A764AEE19E04BB900EA6EBF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A3D241619E1F16400845A1C /* AssetsLibrary.framework in Frameworks */,
+				1A764B1F19E04CA300EA6EBF /* Foundation.framework in Frameworks */,
+				1A764B1D19E04C5900EA6EBF /* CoreGraphics.framework in Frameworks */,
+				1A764B1B19E04C4A00EA6EBF /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1A764B0719E04BBA00EA6EBF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1A764AE819E04BB800EA6EBF = {
+			isa = PBXGroup;
+			children = (
+				1A3D241519E1F16300845A1C /* AssetsLibrary.framework */,
+				1A764B1E19E04CA300EA6EBF /* Foundation.framework */,
+				1A764B1C19E04C5900EA6EBF /* CoreGraphics.framework */,
+				1A764B1A19E04C4A00EA6EBF /* UIKit.framework */,
+				1A764AF319E04BB900EA6EBF /* Sketchy */,
+				1A764B0D19E04BBA00EA6EBF /* SketchyTests */,
+				1A764AF219E04BB900EA6EBF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1A764AF219E04BB900EA6EBF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1A764AF119E04BB900EA6EBF /* Sketchy.app */,
+				1A764B0A19E04BBA00EA6EBF /* SketchyTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1A764AF319E04BB900EA6EBF /* Sketchy */ = {
+			isa = PBXGroup;
+			children = (
+				1A3D241C19E232D300845A1C /* placeholder.png */,
+				1A764AF819E04BB900EA6EBF /* AppDelegate.h */,
+				1A764AF919E04BB900EA6EBF /* AppDelegate.m */,
+				1A764AFB19E04BB900EA6EBF /* ViewController.h */,
+				1A764AFC19E04BB900EA6EBF /* ViewController.m */,
+				1A764AFE19E04BB900EA6EBF /* Main.storyboard */,
+				1A764B2019E04E7300EA6EBF /* SketchViewController.h */,
+				1A764B2119E04E7300EA6EBF /* SketchViewController.m */,
+				1A764B2219E04E7300EA6EBF /* SketchViewController.xib */,
+				1A3D241019E1ECAD00845A1C /* GalleryTableViewController.h */,
+				1A3D241119E1ECAE00845A1C /* GalleryTableViewController.m */,
+				1A3D241719E2150000845A1C /* GalleryViewController.h */,
+				1A3D241819E2150000845A1C /* GalleryViewController.m */,
+				1A3D241919E2150000845A1C /* GalleryViewController.xib */,
+				1A764B0119E04BB900EA6EBF /* Images.xcassets */,
+				1A764B0319E04BB900EA6EBF /* LaunchScreen.xib */,
+				1A764AF419E04BB900EA6EBF /* Supporting Files */,
+			);
+			path = Sketchy;
+			sourceTree = "<group>";
+		};
+		1A764AF419E04BB900EA6EBF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1A764AF519E04BB900EA6EBF /* Info.plist */,
+				1A764AF619E04BB900EA6EBF /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		1A764B0D19E04BBA00EA6EBF /* SketchyTests */ = {
+			isa = PBXGroup;
+			children = (
+				1A764B1019E04BBA00EA6EBF /* SketchyTests.m */,
+				1A764B0E19E04BBA00EA6EBF /* Supporting Files */,
+			);
+			path = SketchyTests;
+			sourceTree = "<group>";
+		};
+		1A764B0E19E04BBA00EA6EBF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				1A764B0F19E04BBA00EA6EBF /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1A764AF019E04BB900EA6EBF /* Sketchy */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A764B1419E04BBA00EA6EBF /* Build configuration list for PBXNativeTarget "Sketchy" */;
+			buildPhases = (
+				1A764AED19E04BB900EA6EBF /* Sources */,
+				1A764AEE19E04BB900EA6EBF /* Frameworks */,
+				1A764AEF19E04BB900EA6EBF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Sketchy;
+			productName = Sketchy;
+			productReference = 1A764AF119E04BB900EA6EBF /* Sketchy.app */;
+			productType = "com.apple.product-type.application";
+		};
+		1A764B0919E04BBA00EA6EBF /* SketchyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1A764B1719E04BBA00EA6EBF /* Build configuration list for PBXNativeTarget "SketchyTests" */;
+			buildPhases = (
+				1A764B0619E04BBA00EA6EBF /* Sources */,
+				1A764B0719E04BBA00EA6EBF /* Frameworks */,
+				1A764B0819E04BBA00EA6EBF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1A764B0C19E04BBA00EA6EBF /* PBXTargetDependency */,
+			);
+			name = SketchyTests;
+			productName = SketchyTests;
+			productReference = 1A764B0A19E04BBA00EA6EBF /* SketchyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1A764AE919E04BB800EA6EBF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = BrandonPlaster;
+				TargetAttributes = {
+					1A764AF019E04BB900EA6EBF = {
+						CreatedOnToolsVersion = 6.0.1;
+					};
+					1A764B0919E04BBA00EA6EBF = {
+						CreatedOnToolsVersion = 6.0.1;
+						TestTargetID = 1A764AF019E04BB900EA6EBF;
+					};
+				};
+			};
+			buildConfigurationList = 1A764AEC19E04BB900EA6EBF /* Build configuration list for PBXProject "Sketchy" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 1A764AE819E04BB800EA6EBF;
+			productRefGroup = 1A764AF219E04BB900EA6EBF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1A764AF019E04BB900EA6EBF /* Sketchy */,
+				1A764B0919E04BBA00EA6EBF /* SketchyTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1A764AEF19E04BB900EA6EBF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A3D241B19E2150000845A1C /* GalleryViewController.xib in Resources */,
+				1A3D241D19E232D300845A1C /* placeholder.png in Resources */,
+				1A764B0019E04BB900EA6EBF /* Main.storyboard in Resources */,
+				1A764B0519E04BB900EA6EBF /* LaunchScreen.xib in Resources */,
+				1A764B2419E04E7300EA6EBF /* SketchViewController.xib in Resources */,
+				1A764B0219E04BB900EA6EBF /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1A764B0819E04BBA00EA6EBF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1A764AED19E04BB900EA6EBF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A3D241319E1ECAE00845A1C /* GalleryTableViewController.m in Sources */,
+				1A764AFD19E04BB900EA6EBF /* ViewController.m in Sources */,
+				1A764AFA19E04BB900EA6EBF /* AppDelegate.m in Sources */,
+				1A764B2319E04E7300EA6EBF /* SketchViewController.m in Sources */,
+				1A764AF719E04BB900EA6EBF /* main.m in Sources */,
+				1A3D241A19E2150000845A1C /* GalleryViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1A764B0619E04BBA00EA6EBF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1A764B1119E04BBA00EA6EBF /* SketchyTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1A764B0C19E04BBA00EA6EBF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1A764AF019E04BB900EA6EBF /* Sketchy */;
+			targetProxy = 1A764B0B19E04BBA00EA6EBF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		1A764AFE19E04BB900EA6EBF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A764AFF19E04BB900EA6EBF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		1A764B0319E04BB900EA6EBF /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				1A764B0419E04BB900EA6EBF /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1A764B1219E04BBA00EA6EBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		1A764B1319E04BBA00EA6EBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1A764B1519E04BBA00EA6EBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Sketchy/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		1A764B1619E04BBA00EA6EBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Sketchy/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		1A764B1819E04BBA00EA6EBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SketchyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sketchy.app/Sketchy";
+			};
+			name = Debug;
+		};
+		1A764B1919E04BBA00EA6EBF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = SketchyTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sketchy.app/Sketchy";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1A764AEC19E04BB900EA6EBF /* Build configuration list for PBXProject "Sketchy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A764B1219E04BBA00EA6EBF /* Debug */,
+				1A764B1319E04BBA00EA6EBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1A764B1419E04BBA00EA6EBF /* Build configuration list for PBXNativeTarget "Sketchy" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A764B1519E04BBA00EA6EBF /* Debug */,
+				1A764B1619E04BBA00EA6EBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1A764B1719E04BBA00EA6EBF /* Build configuration list for PBXNativeTarget "SketchyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1A764B1819E04BBA00EA6EBF /* Debug */,
+				1A764B1919E04BBA00EA6EBF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1A764AE919E04BB800EA6EBF /* Project object */;
+}
