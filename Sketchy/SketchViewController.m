@@ -35,28 +35,23 @@
     self.brush = 10.0;
     self.opacity = 1.0;
     
-    self.sketchURLArray = [[NSMutableArray alloc] init];
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"MM-dd-yyyy HH:mm:ss"];
-    self.sketchbookName = [formatter stringFromDate:[NSDate date]];
-
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library assetForURL:[NSURL URLWithString:_dataObject] resultBlock:^(ALAsset *asset)
-     {
-         ALAssetRepresentation *rep = [asset defaultRepresentation];
-         CGImageRef imageRef = [rep fullResolutionImage];
-         if (imageRef) {
-             [self.mainSketchView setImage: [UIImage imageWithCGImage:imageRef]];
-         }
-     } failureBlock:^(NSError *error)
-     {
-         NSLog(@"%@",[error localizedDescription]);
-     }];
-}
+//- (void)viewWillAppear:(BOOL)animated
+//{
+//    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+//    [library assetForURL:[NSURL URLWithString:_dataObject] resultBlock:^(ALAsset *asset)
+//     {
+//         ALAssetRepresentation *rep = [asset defaultRepresentation];
+//         CGImageRef imageRef = [rep fullResolutionImage];
+//         if (imageRef) {
+//             [self.mainSketchView setImage: [UIImage imageWithCGImage:imageRef]];
+//         }
+//     } failureBlock:^(NSError *error)
+//     {
+//         NSLog(@"%@",[error localizedDescription]);
+//     }];
+//}
 
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -113,8 +108,6 @@
     self.tempSketchView.image = nil;
     UIGraphicsEndImageContext();
 }
-
-
 
 
 - (void)didReceiveMemoryWarning {

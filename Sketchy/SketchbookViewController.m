@@ -14,6 +14,10 @@
 @property (nonatomic, strong) UIView *framesView;
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (nonatomic, strong) NSString *saveResult;
+@property (nonatomic, strong) UIBarButtonItem *backButton;
+@property (nonatomic, strong) UIBarButtonItem *saveButton;
+@property (nonatomic, strong) UIButton *playButton;
+@property (nonatomic, assign) BOOL isPlaying;
 
 @end
 
@@ -25,17 +29,14 @@
 -(id)init{
     self = [super init];
     if (self) {
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Exit" style:UIBarButtonItemStylePlain target:self action:@selector(dismissModalViewControllerAnimated:)];
-        [self.navigationItem setLeftBarButtonItem:backButton];
+        self.backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissModalViewControllerAnimated:)];
+        [self.navigationItem setLeftBarButtonItem:self.backButton];
         
-        UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithTitle:@"Settings" style:UIBarButtonItemStylePlain target:self action:@selector(openSettingsPressed)];
+        UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"palette.png"] style:UIBarButtonItemStylePlain target:self action:@selector(openSettingsPressed)];
         
-        UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithTitle:@"Save" style:UIBarButtonItemStylePlain target:self action:@selector(saveSketchPressed)];
+        self.saveButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"save.png"] style:UIBarButtonItemStylePlain target:self action:@selector(saveSketchPressed)];
         
-        UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithTitle:@"Add" style:UIBarButtonItemStylePlain target:self action:@selector(addSketchPressed)];
-        [self setToolbarItems:@[addButton]];
-        
-        [self.navigationItem setRightBarButtonItems:@[saveButton, settingsButton, addButton]];
+        [self.navigationItem setRightBarButtonItems:@[self.saveButton, settingsButton]];
         
     }
     return self;
@@ -99,6 +100,33 @@
     
     for (UIGestureRecognizer *gest in self.pageController.gestureRecognizers) {
         [self.framesView addGestureRecognizer:gest];
+    }
+    
+    // Add buttons
+    UIButton *addButton = [[UIButton alloc] initWithFrame:((UIView*)[self.saveButton valueForKey:@"view"]).frame];
+    [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
+    [addButton setShowsTouchWhenHighlighted:YES];
+    [addButton addTarget:self action:@selector(addSketchPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.framesView addSubview:addButton];
+    
+    self.playButton = [[UIButton alloc] initWithFrame:((UIView*)[self.backButton valueForKey:@"view"]).frame];
+    [self.playButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
+    [self.playButton setShowsTouchWhenHighlighted:YES];
+    [self.playButton addTarget:self action:@selector(playAnimationPressed) forControlEvents:UIControlEventTouchUpInside];
+    [self.framesView addSubview:self.playButton];
+    
+    // Other setup
+    self.isPlaying = NO;
+}
+
+// Plays the animation
+- (void) playAnimationPressed {
+    if (self.isPlaying) {
+        [self.playButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
+        self.isPlaying = NO;
+    } else {
+        [self.playButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
+        self.isPlaying = YES;
     }
 }
 

@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A11FFB019E46ADB002BCB4C /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A11FFAF19E46ADB002BCB4C /* play.png */; };
+		1A11FFB219E46AFE002BCB4C /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A11FFB119E46AFE002BCB4C /* pause.png */; };
+		1A11FFB619E46B0C002BCB4C /* save.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A11FFB519E46B0C002BCB4C /* save.png */; };
+		1A11FFB819E46BCF002BCB4C /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A11FFB719E46BCF002BCB4C /* back.png */; };
+		1A11FFBA19E4705A002BCB4C /* add.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A11FFB919E4705A002BCB4C /* add.png */; };
+		1A11FFBC19E47395002BCB4C /* palette.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A11FFBB19E47395002BCB4C /* palette.png */; };
 		1A3D241319E1ECAE00845A1C /* GalleryTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3D241119E1ECAE00845A1C /* GalleryTableViewController.m */; };
 		1A3D241619E1F16400845A1C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A3D241519E1F16300845A1C /* AssetsLibrary.framework */; };
 		1A3D241A19E2150000845A1C /* GalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3D241819E2150000845A1C /* GalleryViewController.m */; };
@@ -38,6 +44,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1A11FFAF19E46ADB002BCB4C /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		1A11FFB119E46AFE002BCB4C /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
+		1A11FFB519E46B0C002BCB4C /* save.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = save.png; sourceTree = "<group>"; };
+		1A11FFB719E46BCF002BCB4C /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
+		1A11FFB919E4705A002BCB4C /* add.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = add.png; sourceTree = "<group>"; };
+		1A11FFBB19E47395002BCB4C /* palette.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = palette.png; sourceTree = "<group>"; };
 		1A3D241019E1ECAD00845A1C /* GalleryTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GalleryTableViewController.h; sourceTree = "<group>"; };
 		1A3D241119E1ECAE00845A1C /* GalleryTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryTableViewController.m; sourceTree = "<group>"; };
 		1A3D241519E1F16300845A1C /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -115,6 +127,12 @@
 		1A764AF319E04BB900EA6EBF /* Sketchy */ = {
 			isa = PBXGroup;
 			children = (
+				1A11FFBB19E47395002BCB4C /* palette.png */,
+				1A11FFB919E4705A002BCB4C /* add.png */,
+				1A11FFB719E46BCF002BCB4C /* back.png */,
+				1A11FFAF19E46ADB002BCB4C /* play.png */,
+				1A11FFB119E46AFE002BCB4C /* pause.png */,
+				1A11FFB519E46B0C002BCB4C /* save.png */,
 				1A3D241C19E232D300845A1C /* placeholder.png */,
 				1A764AF819E04BB900EA6EBF /* AppDelegate.h */,
 				1A764AF919E04BB900EA6EBF /* AppDelegate.m */,
@@ -244,10 +262,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A11FFB019E46ADB002BCB4C /* play.png in Resources */,
 				1A3D241B19E2150000845A1C /* GalleryViewController.xib in Resources */,
+				1A11FFB219E46AFE002BCB4C /* pause.png in Resources */,
+				1A11FFB619E46B0C002BCB4C /* save.png in Resources */,
 				1A3D241D19E232D300845A1C /* placeholder.png in Resources */,
 				1A764B0019E04BB900EA6EBF /* Main.storyboard in Resources */,
 				1A764B0519E04BB900EA6EBF /* LaunchScreen.xib in Resources */,
+				1A11FFB819E46BCF002BCB4C /* back.png in Resources */,
+				1A11FFBA19E4705A002BCB4C /* add.png in Resources */,
+				1A11FFBC19E47395002BCB4C /* palette.png in Resources */,
 				1A764B2419E04E7300EA6EBF /* SketchViewController.xib in Resources */,
 				1A764B0219E04BB900EA6EBF /* Images.xcassets in Resources */,
 			);

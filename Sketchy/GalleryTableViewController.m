@@ -26,7 +26,7 @@
     if (self) {
         self.sketchbookNamesArray = [[NSArray alloc] initWithArray: sketchbookNames];
         self.sketchbooksDictionary = [[NSDictionary alloc] initWithDictionary:sketchbooksDictionary];
-        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Exit" style:UIBarButtonItemStylePlain target:self action:@selector(dismissModalViewControllerAnimated:)];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissModalViewControllerAnimated:)];
         [self.navigationItem setLeftBarButtonItem:backButton];
     }
     return self;

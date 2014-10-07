@@ -11,8 +11,7 @@
 
 @interface SketchViewController : UIViewController
 @property (strong, nonatomic) id dataObject;
-@property (nonatomic, strong) NSMutableArray *sketchURLArray;
-@property (nonatomic, strong) NSString *sketchbookName;
+@property (nonatomic, strong) NSMutableArray *sketchURL;
 @property (strong, nonatomic) IBOutlet UIImageView *mainSketchView;
 
 

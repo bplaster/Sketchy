@@ -58,8 +58,8 @@
     NSMutableArray *savedSketchbookNamesArray = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:self.savedSketchbookNamesArrayKey]];
     NSMutableDictionary *savedSketchbooksDictionary = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:self.savedSketchbooksDictionaryKey]];
     
-    NSString *newSketchbookName = ((SketchViewController*)sender).sketchbookName;
-    NSArray *newSketchURLArray = [[NSArray alloc] initWithArray:((SketchViewController*)sender).sketchURLArray];
+    NSString *newSketchbookName = ((SketchbookViewController*)sender).sketchbookName;
+    NSArray *newSketchURLArray = [[NSArray alloc] initWithArray:((SketchbookViewController*)sender).sketchURLArray];
     if (![savedSketchbookNamesArray containsObject:newSketchbookName]) {
         [savedSketchbookNamesArray addObject:newSketchbookName];
     }
