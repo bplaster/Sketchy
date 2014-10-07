@@ -24,6 +24,7 @@
 		1A764B1F19E04CA300EA6EBF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A764B1E19E04CA300EA6EBF /* Foundation.framework */; };
 		1A764B2319E04E7300EA6EBF /* SketchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A764B2119E04E7300EA6EBF /* SketchViewController.m */; };
 		1A764B2419E04E7300EA6EBF /* SketchViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A764B2219E04E7300EA6EBF /* SketchViewController.xib */; };
+		1AEB8C2B19E3AD6B00C6B31E /* SketchbookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1AEB8C2919E3AD6B00C6B31E /* SketchbookViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		1A764B2019E04E7300EA6EBF /* SketchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SketchViewController.h; sourceTree = "<group>"; };
 		1A764B2119E04E7300EA6EBF /* SketchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SketchViewController.m; sourceTree = "<group>"; };
 		1A764B2219E04E7300EA6EBF /* SketchViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SketchViewController.xib; sourceTree = "<group>"; };
+		1AEB8C2819E3AD6B00C6B31E /* SketchbookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SketchbookViewController.h; sourceTree = "<group>"; };
+		1AEB8C2919E3AD6B00C6B31E /* SketchbookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SketchbookViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +121,8 @@
 				1A764AFB19E04BB900EA6EBF /* ViewController.h */,
 				1A764AFC19E04BB900EA6EBF /* ViewController.m */,
 				1A764AFE19E04BB900EA6EBF /* Main.storyboard */,
+				1AEB8C2819E3AD6B00C6B31E /* SketchbookViewController.h */,
+				1AEB8C2919E3AD6B00C6B31E /* SketchbookViewController.m */,
 				1A764B2019E04E7300EA6EBF /* SketchViewController.h */,
 				1A764B2119E04E7300EA6EBF /* SketchViewController.m */,
 				1A764B2219E04E7300EA6EBF /* SketchViewController.xib */,
@@ -264,6 +269,7 @@
 			files = (
 				1A3D241319E1ECAE00845A1C /* GalleryTableViewController.m in Sources */,
 				1A764AFD19E04BB900EA6EBF /* ViewController.m in Sources */,
+				1AEB8C2B19E3AD6B00C6B31E /* SketchbookViewController.m in Sources */,
 				1A764AFA19E04BB900EA6EBF /* AppDelegate.m in Sources */,
 				1A764B2319E04E7300EA6EBF /* SketchViewController.m in Sources */,
 				1A764AF719E04BB900EA6EBF /* main.m in Sources */,

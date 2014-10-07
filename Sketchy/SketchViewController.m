@@ -11,7 +11,6 @@
 
 @interface SketchViewController ()
 
-@property (strong, nonatomic) IBOutlet UIImageView *mainSketchView;
 @property (strong, nonatomic) IBOutlet UIImageView *tempSketchView;
 @property (assign, nonatomic) CGPoint lastPoint;
 @property (assign, nonatomic) CGFloat red;
@@ -25,7 +24,6 @@
 
 @implementation SketchViewController
 
-@synthesize delegate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -37,32 +35,26 @@
     self.brush = 10.0;
     self.opacity = 1.0;
     
-    self.sketchURL = [[NSURL alloc] init];
+    self.sketchURLArray = [[NSMutableArray alloc] init];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MM-dd-yyyy HH:mm:ss"];
+    self.sketchbookName = [formatter stringFromDate:[NSDate date]];
 
 }
 
-
-- (IBAction)addFramePressed:(id)sender {
-}
-
-
-- (IBAction)saveSketchPressed:(id)sender {
-    UIGraphicsBeginImageContextWithOptions(self.mainSketchView.bounds.size, NO,0.0);
-    [self.mainSketchView.image drawInRect:CGRectMake(0, 0, self.mainSketchView.frame.size.width, self.mainSketchView.frame.size.height)];
-    UIImage *saveSketch = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
+- (void)viewWillAppear:(BOOL)animated
+{
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library writeImageToSavedPhotosAlbum:[saveSketch CGImage] metadata:nil completionBlock:^(NSURL *assetURL, NSError *error){
-     if (error) {
-         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Image could not be saved. Please try again"  delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
-         [alert show];
-    } else {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Image was successfully saved in photoalbum"  delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
-        [alert show];
-        self.sketchURL = assetURL;
-        [self.delegate storeSketchURL:self];
-    }
+    [library assetForURL:[NSURL URLWithString:_dataObject] resultBlock:^(ALAsset *asset)
+     {
+         ALAssetRepresentation *rep = [asset defaultRepresentation];
+         CGImageRef imageRef = [rep fullResolutionImage];
+         if (imageRef) {
+             [self.mainSketchView setImage: [UIImage imageWithCGImage:imageRef]];
+         }
+     } failureBlock:^(NSError *error)
+     {
+         NSLog(@"%@",[error localizedDescription]);
      }];
 }
 

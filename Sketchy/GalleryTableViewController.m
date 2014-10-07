@@ -13,16 +13,21 @@
 
 @interface GalleryTableViewController ()
 
-@property (nonatomic, strong) NSArray *sketchesArray;
+@property (nonatomic, strong) NSArray *sketchbookNamesArray;
+@property (nonatomic, strong) NSDictionary *sketchbooksDictionary;
 
 @end
 
 @implementation GalleryTableViewController
 
-- (id)initWithSketchArray: (NSArray *) sketchArray {
+
+- (id)initWithArray: (NSArray *) sketchbookNames andDictionary: (NSDictionary *) sketchbooksDictionary {
     self = [super init];
     if (self) {
-        self.sketchesArray = [[NSArray alloc] initWithArray: sketchArray];
+        self.sketchbookNamesArray = [[NSArray alloc] initWithArray: sketchbookNames];
+        self.sketchbooksDictionary = [[NSDictionary alloc] initWithDictionary:sketchbooksDictionary];
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Exit" style:UIBarButtonItemStylePlain target:self action:@selector(dismissModalViewControllerAnimated:)];
+        [self.navigationItem setLeftBarButtonItem:backButton];
     }
     return self;
 }
@@ -46,12 +51,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     // Return the number of sections.
-    return 1;
+    return [self.sketchbookNamesArray count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     // Return the number of rows in the section.
-    return [self.sketchesArray count];
+    return [[self.sketchbooksDictionary objectForKey:[self.sketchbookNamesArray objectAtIndex:section]] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    return [self.sketchbookNamesArray objectAtIndex:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -64,8 +73,8 @@
     }
     
     // Set text
-    NSString *key = [self.sketchesArray objectAtIndex:indexPath.row];
-    cell.textLabel.text = key;
+    NSString *sketchURLString = [[self.sketchbooksDictionary objectForKey:[self.sketchbookNamesArray objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    cell.textLabel.text = [NSString stringWithFormat:@"frame: %i",(int)indexPath.row];
     
     // Add a placeholder image while correct image loads
     UIImage *placeholderImage = [UIImage imageNamed:@"placeholder.png"];
@@ -73,9 +82,8 @@
     
     
     // Get Image
-    NSURL *sketchURL = [[NSUserDefaults standardUserDefaults] URLForKey:key];
     ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-    [library assetForURL:sketchURL resultBlock:^(ALAsset *asset)
+    [library assetForURL:[NSURL URLWithString:sketchURLString] resultBlock:^(ALAsset *asset)
      {
          CGImageRef imageRef = [asset thumbnail];
          if (imageRef) {
@@ -91,8 +99,8 @@
 
 -(void) tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSURL *sketchURL = [[NSUserDefaults standardUserDefaults] URLForKey:[self.sketchesArray objectAtIndex:indexPath.row]];
-    GalleryViewController *sketchView = [[GalleryViewController alloc] initWithSketchURL:sketchURL];
+    NSString *sketchURLString = [[self.sketchbooksDictionary objectForKey:[self.sketchbookNamesArray objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    GalleryViewController *sketchView = [[GalleryViewController alloc] initWithSketchURL:[NSURL URLWithString:sketchURLString]];
     [self.navigationController pushViewController:sketchView animated:YES];
     
 }

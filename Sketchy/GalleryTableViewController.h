@@ -10,6 +10,6 @@
 
 @interface GalleryTableViewController : UITableViewController
 
-- (id)initWithSketchArray: (NSArray *) sketchArray;
+- (id)initWithArray: (NSArray *) sketchbookNames andDictionary: (NSDictionary *) sketchbooksDictionary;
 
 @end

@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SketchViewController.h"
+#import "SketchbookViewController.h"
 #import "GalleryTableViewController.h"
 
-@interface ViewController : UIViewController <SketchViewControllerDelegate>
+@interface ViewController : UIViewController <SketchbookViewControllerDelegate>
 
 
 @end

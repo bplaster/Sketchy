@@ -8,14 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol SketchViewControllerDelegate <NSObject>
-- (void)storeSketchURL:(id)sender;
-@end
 
 @interface SketchViewController : UIViewController
-
-@property (nonatomic, weak) id<SketchViewControllerDelegate> delegate;
-@property (strong, nonatomic) NSURL *sketchURL;
+@property (strong, nonatomic) id dataObject;
+@property (nonatomic, strong) NSMutableArray *sketchURLArray;
+@property (nonatomic, strong) NSString *sketchbookName;
+@property (strong, nonatomic) IBOutlet UIImageView *mainSketchView;
 
 
 @end
