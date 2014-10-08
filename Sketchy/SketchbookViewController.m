@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIBarButtonItem *saveButton;
 @property (nonatomic, strong) UIButton *playButton;
 @property (nonatomic, assign) BOOL isPlaying;
+@property (nonatomic, strong) UIPageControl *pageControl;
 
 @end
 
@@ -53,10 +54,12 @@
     self.sketchNameArray = [[NSMutableArray alloc] init];
     self.sketchURLArray = [[NSMutableArray alloc] init];
     
+    // Add pagecontrol display
+    self.pageControl = [[UIPageControl alloc] init];
+    
     // Add initial Sketch
-    [self.sketchNameArray addObjectsFromArray:@[@"Frame: 0"]];
     self.viewControllers = [[NSMutableArray alloc] init];
-    SketchViewController *initialViewController = [self viewControllerAtIndex:0];
+
     
     //Setup pagecontroller
     NSDictionary *options = [NSDictionary dictionaryWithObject: [NSNumber numberWithInteger:UIPageViewControllerSpineLocationMin]
@@ -69,7 +72,7 @@
     
     
     // Gesture Area
-    CGFloat fvWidth = initialViewController.view.bounds.size.width;
+    CGFloat fvWidth = self.view.bounds.size.width;
     CGFloat fvHeight = self.navigationController.navigationBar.bounds.size.height;
     CGFloat fvX = self.view.bounds.origin.x;
     CGFloat fvY = self.view.bounds.size.height - fvHeight;
@@ -82,6 +85,7 @@
     CGFloat vcY = fvY - vcHeight;
         
     // Set up drawing area
+    [self addSketchView];
     [self.pageController.view setFrame:CGRectMake(vcX, vcY, vcWidth, vcHeight)];
     [self.pageController setViewControllers:self.viewControllers
                                   direction:UIPageViewControllerNavigationDirectionForward
@@ -95,18 +99,13 @@
     // Set up area for gestures
     self.framesView = [[UIView alloc] initWithFrame:CGRectMake(fvX, fvY, fvWidth, fvHeight)];
     self.framesView.backgroundColor = [UIColor lightGrayColor];
-    
     [self.view addSubview:self.framesView];
-    
-    for (UIGestureRecognizer *gest in self.pageController.gestureRecognizers) {
-        [self.framesView addGestureRecognizer:gest];
-    }
     
     // Add buttons
     UIButton *addButton = [[UIButton alloc] initWithFrame:((UIView*)[self.saveButton valueForKey:@"view"]).frame];
     [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
     [addButton setShowsTouchWhenHighlighted:YES];
-    [addButton addTarget:self action:@selector(addSketchPressed) forControlEvents:UIControlEventTouchUpInside];
+    [addButton addTarget:self action:@selector(addSketchView) forControlEvents:UIControlEventTouchUpInside];
     [self.framesView addSubview:addButton];
     
     self.playButton = [[UIButton alloc] initWithFrame:((UIView*)[self.backButton valueForKey:@"view"]).frame];
@@ -115,8 +114,24 @@
     [self.playButton addTarget:self action:@selector(playAnimationPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.framesView addSubview:self.playButton];
     
+    //Page control area
+    CGFloat pcX = self.playButton.frame.origin.x + self.playButton.frame.size.width;
+    CGFloat pcY = self.playButton.frame.origin.y;
+    CGFloat pcWidth = addButton.frame.origin.x - pcX;
+    CGFloat pcHeight = self.playButton.frame.size.height;
+    [self.pageControl setFrame:CGRectMake(pcX, pcY, pcWidth, pcHeight)];
+    [self.pageControl setUserInteractionEnabled:NO];
+    [self.framesView addSubview:self.pageControl];
+    
+    // Attach pagecontroller gestures to framesView
+    for (UIGestureRecognizer *gest in self.pageController.gestureRecognizers) {
+        [self.framesView addGestureRecognizer:gest];
+    }
+    
+    
     // Other setup
     self.isPlaying = NO;
+    [self viewControllerAtIndex:0];
 }
 
 // Plays the animation
@@ -135,12 +150,7 @@
     if (([self.sketchNameArray count] == 0) || (index >= [self.sketchNameArray count])) {
         return nil;
     }
-    if ([self.viewControllers count] <= index) {
-        SketchViewController *sketchView = [[SketchViewController alloc] init];
-        sketchView.dataObject = [self.sketchNameArray objectAtIndex:index];
-        [self.viewControllers addObject:sketchView];
-    }
-    
+    [self.pageControl setCurrentPage: index];
     return [self.viewControllers objectAtIndex:index];
 }
 
@@ -178,8 +188,17 @@
     
 }
 
-- (void) addSketchPressed {
-    [self.sketchNameArray addObject:[NSString stringWithFormat:@"Frame: %i",(int)self.sketchNameArray.count]];
+
+// Adds a new sketch view
+- (void) addSketchView {
+    NSString *sketchName = [NSString stringWithFormat:@"Frame: %i",(int)[self.sketchNameArray count]];
+    [self.sketchNameArray addObject: sketchName];
+    
+    SketchViewController *sketchView = [[SketchViewController alloc] init];
+    sketchView.dataObject = sketchName;
+    [self.viewControllers addObject:sketchView];
+
+    [self.pageControl setNumberOfPages:[self.sketchNameArray count]]; // Could just add 1 to current count
 }
 
 - (void)saveSketchPressed {
