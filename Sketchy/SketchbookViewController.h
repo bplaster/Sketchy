@@ -8,12 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "SketchViewController.h"
+#import "SettingsViewController.h"
 
 @protocol SketchbookViewControllerDelegate <NSObject>
 - (void)storeSketchURL:(id)sender;
 @end
 
-@interface SketchbookViewController : UIViewController <UIPageViewControllerDataSource, UIGestureRecognizerDelegate>
+@interface SketchbookViewController : UIViewController <UIPageViewControllerDataSource, SettingsViewControllerDelegate>
 
 @property (nonatomic, weak) id<SketchbookViewControllerDelegate> delegate;
 

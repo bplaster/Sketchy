@@ -16,7 +16,7 @@
 @property (assign, nonatomic) CGFloat red;
 @property (assign, nonatomic) CGFloat green;
 @property (assign, nonatomic) CGFloat blue;
-@property (assign, nonatomic) CGFloat brush;
+@property (assign, nonatomic) CGFloat diameter;
 @property (assign, nonatomic) CGFloat opacity;
 @property (assign, nonatomic) BOOL isContinuousStroke;
 
@@ -32,9 +32,17 @@
     self.red = 0.0/255.0;
     self.green = 0.0/255.0;
     self.blue = 0.0/255.0;
-    self.brush = 10.0;
+    self.diameter = 10.0;
     self.opacity = 1.0;
     
+}
+
+- (void)setRed:(CGFloat)r andGreen:(CGFloat)g andBlue:(CGFloat)b andOpacity:(CGFloat)o andDiameter:(CGFloat)d {
+    self.red = r;
+    self.green = g;
+    self.blue = b;
+    self.opacity = o;
+    self.diameter = d;
 }
 
 //- (void)viewWillAppear:(BOOL)animated
@@ -69,7 +77,9 @@
     self.isContinuousStroke = YES;
     UITouch *touch = [touches anyObject];
     CGPoint currentPoint = [touch locationInView:self.mainSketchView];
-    [self drawBetweenPoint:self.lastPoint andPoint:currentPoint];
+    if (!CGPointEqualToPoint(self.lastPoint, currentPoint)) {
+        [self drawBetweenPoint:self.lastPoint andPoint:currentPoint];
+    }
     self.lastPoint = currentPoint;
 }
 
@@ -81,7 +91,7 @@
     UIGraphicsBeginImageContext(self.tempSketchView.frame.size);
     [self.tempSketchView.image drawInRect:CGRectMake(0, 0, self.tempSketchView.frame.size.width, self.tempSketchView.frame.size.height)];
     CGContextSetLineCap(UIGraphicsGetCurrentContext(), kCGLineCapRound);
-    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.brush);
+    CGContextSetLineWidth(UIGraphicsGetCurrentContext(), self.diameter);
     CGContextSetRGBStrokeColor(UIGraphicsGetCurrentContext(), self.red, self.green, self.blue, self.opacity);
     CGContextMoveToPoint(UIGraphicsGetCurrentContext(), startPoint.x, startPoint.y);
     CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), endPoint.x, endPoint.y);

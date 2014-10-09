@@ -20,6 +20,13 @@
 @property (nonatomic, assign) BOOL isPlaying;
 @property (nonatomic, strong) UIPageControl *pageControl;
 
+// Pen properties
+@property (assign, nonatomic) CGFloat red;
+@property (assign, nonatomic) CGFloat green;
+@property (assign, nonatomic) CGFloat blue;
+@property (assign, nonatomic) CGFloat diameter;
+@property (assign, nonatomic) CGFloat opacity;
+
 @end
 
 @implementation SketchbookViewController
@@ -54,12 +61,18 @@
     self.sketchNameArray = [[NSMutableArray alloc] init];
     self.sketchURLArray = [[NSMutableArray alloc] init];
     
+    // Setup drawing defaults
+    self.red = 0.0/255.0;
+    self.green = 0.0/255.0;
+    self.blue = 0.0/255.0;
+    self.diameter = 10.0;
+    self.opacity = 1.0;
+    
     // Add pagecontrol display
     self.pageControl = [[UIPageControl alloc] init];
     
     // Add initial Sketch
     self.viewControllers = [[NSMutableArray alloc] init];
-
     
     //Setup pagecontroller
     NSDictionary *options = [NSDictionary dictionaryWithObject: [NSNumber numberWithInteger:UIPageViewControllerSpineLocationMin]
@@ -98,19 +111,19 @@
     
     // Set up area for gestures
     self.framesView = [[UIView alloc] initWithFrame:CGRectMake(fvX, fvY, fvWidth, fvHeight)];
-    self.framesView.backgroundColor = [UIColor lightGrayColor];
+    [self.framesView setBackgroundColor: [UIColor colorWithHue:0 saturation:0 brightness:0.9 alpha:1]];
     [self.view addSubview:self.framesView];
     
     // Add buttons
     UIButton *addButton = [[UIButton alloc] initWithFrame:((UIView*)[self.saveButton valueForKey:@"view"]).frame];
-    [addButton setImage:[UIImage imageNamed:@"add.png"] forState:UIControlStateNormal];
-    [addButton setShowsTouchWhenHighlighted:YES];
+    UIImage *addImage = [[UIImage imageNamed:@"add.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [addButton setImage:addImage forState:UIControlStateNormal];
     [addButton addTarget:self action:@selector(addSketchView) forControlEvents:UIControlEventTouchUpInside];
     [self.framesView addSubview:addButton];
     
     self.playButton = [[UIButton alloc] initWithFrame:((UIView*)[self.backButton valueForKey:@"view"]).frame];
-    [self.playButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
-    [self.playButton setShowsTouchWhenHighlighted:YES];
+    UIImage *playImage = [[UIImage imageNamed:@"play.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [self.playButton setImage:playImage forState:UIControlStateNormal];
     [self.playButton addTarget:self action:@selector(playAnimationPressed) forControlEvents:UIControlEventTouchUpInside];
     [self.framesView addSubview:self.playButton];
     
@@ -120,6 +133,8 @@
     CGFloat pcWidth = addButton.frame.origin.x - pcX;
     CGFloat pcHeight = self.playButton.frame.size.height;
     [self.pageControl setFrame:CGRectMake(pcX, pcY, pcWidth, pcHeight)];
+    [self.pageControl setCurrentPageIndicatorTintColor:[UIColor colorWithHue:0.6 saturation:1 brightness:1 alpha:1]];
+    [self.pageControl setPageIndicatorTintColor:[UIColor colorWithHue:0.6 saturation:1 brightness:1 alpha:0.5]];
     [self.pageControl setUserInteractionEnabled:NO];
     [self.framesView addSubview:self.pageControl];
     
@@ -127,7 +142,6 @@
     for (UIGestureRecognizer *gest in self.pageController.gestureRecognizers) {
         [self.framesView addGestureRecognizer:gest];
     }
-    
     
     // Other setup
     self.isPlaying = NO;
@@ -167,6 +181,8 @@
     }
     
     index--;
+    
+    [self.pageControl setCurrentPage: index];
     return [self viewControllerAtIndex:index];
 }
 
@@ -181,13 +197,30 @@
     if (index == [self.sketchNameArray count]) {
         return nil;
     }
+    
+    [self.pageControl setCurrentPage: index];
     return [self viewControllerAtIndex:index];
 }
 
 - (void)openSettingsPressed {
-    
+    SettingsViewController *settingsView = [[SettingsViewController alloc] init];
+    [settingsView setRed:self.red andGreen:self.green andBlue:self.blue andOpacity:self.opacity andDiameter:self.diameter];
+    [settingsView setDelegate:self];
+    [self.navigationController pushViewController:settingsView animated:YES];
 }
 
+- (void)closeSettings:(id)sender {
+    self.red = ((SettingsViewController*)sender).red;
+    self.green = ((SettingsViewController*)sender).green;
+    self.blue = ((SettingsViewController*)sender).blue;
+    self.opacity = ((SettingsViewController*)sender).opacity;
+    self.diameter = ((SettingsViewController*)sender).diameter;
+    [self.navigationController popViewControllerAnimated:YES];
+    
+    for (SketchViewController *sketchView in self.viewControllers) {
+        [sketchView setRed:self.red andGreen:self.green andBlue:self.blue andOpacity:self.opacity andDiameter:self.diameter];
+    }
+}
 
 // Adds a new sketch view
 - (void) addSketchView {
@@ -196,11 +229,13 @@
     
     SketchViewController *sketchView = [[SketchViewController alloc] init];
     sketchView.dataObject = sketchName;
+    [sketchView setRed:self.red andGreen:self.green andBlue:self.blue andOpacity:self.opacity andDiameter:self.diameter];
     [self.viewControllers addObject:sketchView];
 
-    [self.pageControl setNumberOfPages:[self.sketchNameArray count]]; // Could just add 1 to current count
+    [self.pageControl setNumberOfPages:[self.sketchNameArray count]];
 }
 
+// Saves all sketches
 - (void)saveSketchPressed {
     NSUInteger count = [self.viewControllers count];
     for (int i = 0; i < count; i++) {
