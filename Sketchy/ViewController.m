@@ -10,7 +10,6 @@
 
 @interface ViewController ()
 
-@property (nonatomic, strong) UINavigationController *navController;
 @property (nonatomic, strong) NSString *savedSketchbookNamesArrayKey;
 @property (nonatomic, strong) NSString *savedSketchbooksDictionaryKey;
 
@@ -22,9 +21,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    self.navController = [[UINavigationController alloc] init];
-    //[self.navController setToolbarHidden:NO];
-
+    
     self.savedSketchbookNamesArrayKey = @"sketchbookNames";
     self.savedSketchbooksDictionaryKey = @"sketchbooksDictionary";
 }
@@ -33,8 +30,8 @@
 - (IBAction)newSketchbookPressed:(id)sender {
     SketchbookViewController *newSketchbookView = [[SketchbookViewController alloc] init];
     [newSketchbookView setDelegate:self];
-    [self.navController setViewControllers:@[newSketchbookView]];
-    [self presentViewController:self.navController animated:YES completion:nil];
+    UINavigationController *sketchNav = [[UINavigationController alloc] initWithRootViewController:newSketchbookView];
+    [self presentViewController:sketchNav animated:YES completion:nil];
 }
 
 // View Sketch book gallery
@@ -43,8 +40,8 @@
     NSDictionary *savedSketchbooksDictionary = [[NSDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:self.savedSketchbooksDictionaryKey]];
     
     GalleryTableViewController *galleryTableView = [[GalleryTableViewController alloc] initWithArray:savedSketchbookNamesArray andDictionary:savedSketchbooksDictionary];
-    [self.navController setViewControllers:@[galleryTableView]];
-    [self presentViewController:self.navController animated:YES completion:nil];
+    UINavigationController *galleryNav = [[UINavigationController alloc] initWithRootViewController:galleryTableView];
+    [self presentViewController:galleryNav animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

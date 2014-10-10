@@ -14,12 +14,14 @@
 @property (strong, nonatomic) IBOutlet UILabel *greenLabel;
 @property (strong, nonatomic) IBOutlet UILabel *blueLabel;
 @property (strong, nonatomic) IBOutlet UILabel *opacityLabel;
+@property (strong, nonatomic) IBOutlet UILabel *frameRateLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *brushView;
 @property (strong, nonatomic) IBOutlet UISlider *diameterSlider;
 @property (strong, nonatomic) IBOutlet UISlider *redSlider;
 @property (strong, nonatomic) IBOutlet UISlider *greenSlider;
 @property (strong, nonatomic) IBOutlet UISlider *blueSlider;
 @property (strong, nonatomic) IBOutlet UISlider *opacitySlider;
+@property (strong, nonatomic) IBOutlet UISlider *frameRateSlider;
 
 @end
 
@@ -31,12 +33,14 @@
     if (self) {
         UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:UIBarButtonItemStylePlain target:self action:@selector(closeSettings)];
         [self.navigationItem setLeftBarButtonItem:backButton];
+        [self setTitle:@"Settings"];
         
         self.red = 0.0/255.0;
         self.green = 0.0/255.0;
         self.blue = 0.0/255.0;
         self.diameter = 10.0;
         self.opacity = 1.0;
+        self.frameRate = 20.0;
     }
     return self;
 }
@@ -48,12 +52,13 @@
     [self updateUIElements];
 }
 
-- (void)setRed:(CGFloat)r andGreen:(CGFloat)g andBlue:(CGFloat)b andOpacity:(CGFloat)o andDiameter:(CGFloat)d {
+- (void)setRed:(CGFloat)r andGreen:(CGFloat)g andBlue:(CGFloat)b andOpacity:(CGFloat)o andDiameter:(CGFloat)d andFrameRate:(CGFloat)f{
     self.red = r;
     self.green = g;
     self.blue = b;
     self.opacity = o;
     self.diameter = d;
+    self.frameRate = f;
 }
 
 - (IBAction)sliderChanged:(id)sender {
@@ -73,6 +78,9 @@
     } else if (changedSlider == self.opacitySlider) {
         self.opacity = changedSlider.value;
         self.opacityLabel.text = [NSString stringWithFormat:@"%.1f", self.opacity];
+    } else if (changedSlider == self.frameRateSlider) {
+        self.frameRate = changedSlider.value;
+        self.frameRateLabel.text = [NSString stringWithFormat:@"%.1f", self.frameRate];
     }
     [self updateBrushView];
 }
@@ -96,16 +104,14 @@
     self.greenSlider.value = self.green;
     self.blueSlider.value = self.blue;
     self.opacitySlider.value = self.opacity;
+    self.frameRateSlider.value = self.frameRate;
     
     self.diameterLabel.text = [NSString stringWithFormat:@"%.1f", self.diameter];
     self.redLabel.text = [NSString stringWithFormat:@"%.1f", self.red];
     self.greenLabel.text = [NSString stringWithFormat:@"%.1f", self.green];
     self.blueLabel.text = [NSString stringWithFormat:@"%.1f", self.blue];
     self.opacityLabel.text = [NSString stringWithFormat:@"%.1f", self.opacity];
-    
-}
-
-- (IBAction)frameRateChanged:(id)sender {
+    self.frameRateLabel.text = [NSString stringWithFormat:@"%.1f", self.frameRate];
 }
 
 - (void)closeSettings {

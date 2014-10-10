@@ -14,7 +14,7 @@
 - (void)storeSketchURL:(id)sender;
 @end
 
-@interface SketchbookViewController : UIViewController <UIPageViewControllerDataSource, SettingsViewControllerDelegate>
+@interface SketchbookViewController : UIViewController <UIPageViewControllerDelegate, UIPageViewControllerDataSource, SettingsViewControllerDelegate, UIAlertViewDelegate>
 
 @property (nonatomic, weak) id<SketchbookViewControllerDelegate> delegate;
 

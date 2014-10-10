@@ -11,7 +11,6 @@
 
 @interface SketchViewController ()
 
-@property (strong, nonatomic) IBOutlet UIImageView *tempSketchView;
 @property (assign, nonatomic) CGPoint lastPoint;
 @property (assign, nonatomic) CGFloat red;
 @property (assign, nonatomic) CGFloat green;

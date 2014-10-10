@@ -16,7 +16,7 @@
 
 @property (nonatomic, weak) id<SettingsViewControllerDelegate> delegate;
 
-- (void)setRed:(CGFloat)r andGreen:(CGFloat)g andBlue:(CGFloat)b andOpacity:(CGFloat)o andDiameter:(CGFloat)d;
+- (void)setRed:(CGFloat)r andGreen:(CGFloat)g andBlue:(CGFloat)b andOpacity:(CGFloat)o andDiameter:(CGFloat)d andFrameRate:(CGFloat)f;
 
 
 // Pen properties
@@ -25,5 +25,7 @@
 @property (assign, nonatomic) CGFloat blue;
 @property (assign, nonatomic) CGFloat diameter;
 @property (assign, nonatomic) CGFloat opacity;
+@property (assign, nonatomic) CGFloat frameRate;
+
 
 @end

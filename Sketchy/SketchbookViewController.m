@@ -14,9 +14,8 @@
 @property (nonatomic, strong) UIView *framesView;
 @property (nonatomic, strong) NSMutableArray *viewControllers;
 @property (nonatomic, strong) NSString *saveResult;
-@property (nonatomic, strong) UIBarButtonItem *backButton;
-@property (nonatomic, strong) UIBarButtonItem *saveButton;
-@property (nonatomic, strong) UIButton *playButton;
+@property (nonatomic, strong) UIBarButtonItem *playButton;
+@property (nonatomic, strong) UIBarButtonItem *stopButton;
 @property (nonatomic, assign) BOOL isPlaying;
 @property (nonatomic, strong) UIPageControl *pageControl;
 
@@ -26,6 +25,7 @@
 @property (assign, nonatomic) CGFloat blue;
 @property (assign, nonatomic) CGFloat diameter;
 @property (assign, nonatomic) CGFloat opacity;
+@property (assign, nonatomic) CGFloat frameRate;
 
 @end
 
@@ -37,22 +37,52 @@
 -(id)init{
     self = [super init];
     if (self) {
-        self.backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissModalViewControllerAnimated:)];
-        [self.navigationItem setLeftBarButtonItem:self.backButton];
+        // Set up Navigation Bar
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"back.png"] style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
+        [self.navigationItem setLeftBarButtonItem:backButton];
         
         UIBarButtonItem *settingsButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"palette.png"] style:UIBarButtonItemStylePlain target:self action:@selector(openSettingsPressed)];
         
-        self.saveButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"save.png"] style:UIBarButtonItemStylePlain target:self action:@selector(saveSketchPressed)];
+        UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"save.png"] style:UIBarButtonItemStylePlain target:self action:@selector(saveSketchPressed)];
         
-        [self.navigationItem setRightBarButtonItems:@[self.saveButton, settingsButton]];
+        [self.navigationItem setRightBarButtonItems:@[saveButton, settingsButton]];
         
+        // Set up Toolbar
+        UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addSketchView)];
+        self.playButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemPlay target:self action:@selector(playStop)];
+        self.stopButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemStop target:self action:@selector(playStop)];
+        UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+        
+        [self setToolbarItems:@[self.playButton, flexibleSpace, addButton]];
     }
     return self;
 }
 
+- (void) backButtonPressed {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hmmm" message:@"Care to save your work?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Yes", @"No", nil];
+    alert.tag = 1;
+    [alert show];
+}
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1) {
+        if (buttonIndex == 0) {
+            [self saveSketchPressed];
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+
+- (void) viewWillAppear:(BOOL)animated{
+    [self.navigationController setToolbarHidden:NO];
+}
+
+- (void) viewWillDisappear:(BOOL)animated{
+    [self.navigationController setToolbarHidden:YES animated:animated];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
     
     // Name the project
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -67,6 +97,7 @@
     self.blue = 0.0/255.0;
     self.diameter = 10.0;
     self.opacity = 1.0;
+    self.frameRate = 20;
     
     // Add pagecontrol display
     self.pageControl = [[UIPageControl alloc] init];
@@ -82,20 +113,14 @@
                                                           navigationOrientation: UIPageViewControllerNavigationOrientationHorizontal
                                                                         options: options];
     self.pageController.dataSource = self;
-    
-    
-    // Gesture Area
-    CGFloat fvWidth = self.view.bounds.size.width;
-    CGFloat fvHeight = self.navigationController.navigationBar.bounds.size.height;
-    CGFloat fvX = self.view.bounds.origin.x;
-    CGFloat fvY = self.view.bounds.size.height - fvHeight;
+    self.pageController.delegate = self;
     
     // Drawing Area
     CGFloat statusBarHeight = ([[UIApplication sharedApplication] statusBarFrame]).size.height;
-    CGFloat vcWidth = fvWidth;
-    CGFloat vcHeight = self.view.bounds.size.height - statusBarHeight - self.navigationController.navigationBar.bounds.size.height - fvHeight;
-    CGFloat vcX = fvX;
-    CGFloat vcY = fvY - vcHeight;
+    CGFloat vcWidth = self.view.bounds.size.width;
+    CGFloat vcHeight = self.view.bounds.size.height - statusBarHeight - self.navigationController.navigationBar.bounds.size.height - self.navigationController.toolbar.bounds.size.height;
+    CGFloat vcX = 0;
+    CGFloat vcY = statusBarHeight + self.navigationController.navigationBar.frame.origin.y + self.navigationController.navigationBar.frame.size.height;
         
     // Set up drawing area
     [self addSketchView];
@@ -108,39 +133,21 @@
     [self addChildViewController:self.pageController];
     [self.view addSubview: self.pageController.view];
     [self.pageController didMoveToParentViewController:self];
-    
-    // Set up area for gestures
-    self.framesView = [[UIView alloc] initWithFrame:CGRectMake(fvX, fvY, fvWidth, fvHeight)];
-    [self.framesView setBackgroundColor: [UIColor colorWithHue:0 saturation:0 brightness:0.9 alpha:1]];
-    [self.view addSubview:self.framesView];
-    
-    // Add buttons
-    UIButton *addButton = [[UIButton alloc] initWithFrame:((UIView*)[self.saveButton valueForKey:@"view"]).frame];
-    UIImage *addImage = [[UIImage imageNamed:@"add.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [addButton setImage:addImage forState:UIControlStateNormal];
-    [addButton addTarget:self action:@selector(addSketchView) forControlEvents:UIControlEventTouchUpInside];
-    [self.framesView addSubview:addButton];
-    
-    self.playButton = [[UIButton alloc] initWithFrame:((UIView*)[self.backButton valueForKey:@"view"]).frame];
-    UIImage *playImage = [[UIImage imageNamed:@"play.png"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [self.playButton setImage:playImage forState:UIControlStateNormal];
-    [self.playButton addTarget:self action:@selector(playAnimationPressed) forControlEvents:UIControlEventTouchUpInside];
-    [self.framesView addSubview:self.playButton];
-    
-    //Page control area
-    CGFloat pcX = self.playButton.frame.origin.x + self.playButton.frame.size.width;
-    CGFloat pcY = self.playButton.frame.origin.y;
-    CGFloat pcWidth = addButton.frame.origin.x - pcX;
-    CGFloat pcHeight = self.playButton.frame.size.height;
+
+    // Set up page control
+    CGFloat pcX = 0;
+    CGFloat pcY = 0;
+    CGFloat pcWidth = self.navigationController.toolbar.bounds.size.width;
+    CGFloat pcHeight = self.navigationController.toolbar.bounds.size.height;
     [self.pageControl setFrame:CGRectMake(pcX, pcY, pcWidth, pcHeight)];
     [self.pageControl setCurrentPageIndicatorTintColor:[UIColor colorWithHue:0.6 saturation:1 brightness:1 alpha:1]];
     [self.pageControl setPageIndicatorTintColor:[UIColor colorWithHue:0.6 saturation:1 brightness:1 alpha:0.5]];
     [self.pageControl setUserInteractionEnabled:NO];
-    [self.framesView addSubview:self.pageControl];
+    [self.navigationController.toolbar addSubview:self.pageControl];
     
-    // Attach pagecontroller gestures to framesView
+    // Attach pagecontroller gestures to toolbar
     for (UIGestureRecognizer *gest in self.pageController.gestureRecognizers) {
-        [self.framesView addGestureRecognizer:gest];
+        [self.navigationController.toolbar addGestureRecognizer:gest];
     }
     
     // Other setup
@@ -149,62 +156,36 @@
 }
 
 // Plays the animation
-- (void) playAnimationPressed {
+- (void) playStop {
+    NSMutableArray* itemsArray = [[NSMutableArray alloc] initWithArray:self.navigationController.toolbar.items];
     if (self.isPlaying) {
-        [self.playButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
         self.isPlaying = NO;
+        [itemsArray setObject:self.playButton atIndexedSubscript:0];
+        SketchViewController *currView = [self viewControllerAtIndex:self.pageControl.currentPage];
+        [currView.tempSketchView stopAnimating];
+        [currView.tempSketchView setImage:nil];
+        [currView.mainSketchView setHidden:NO];
     } else {
-        [self.playButton setImage:[UIImage imageNamed:@"pause.png"] forState:UIControlStateNormal];
         self.isPlaying = YES;
+        [itemsArray setObject:self.stopButton atIndexedSubscript:0];
+        NSMutableArray *imageArray = [[NSMutableArray alloc] init];
+        for (SketchViewController *sketchView in self.viewControllers) {
+            [imageArray addObject:sketchView.mainSketchView.image];
+        }
+        SketchViewController *currView = [self viewControllerAtIndex:self.pageControl.currentPage];
+        [currView.mainSketchView setHidden:YES];
+        [currView.tempSketchView setAnimationImages:imageArray];
+        [currView.tempSketchView setAnimationDuration:imageArray.count/self.frameRate];
+        //[currView.tempSketchView setAnimationRepeatCount:1];
+        [currView.tempSketchView startAnimating];
     }
-}
+    [self.navigationController.toolbar setItems:itemsArray animated:YES];
 
-// Returns viewController at given index
-- (SketchViewController *)viewControllerAtIndex:(NSUInteger)index {
-    if (([self.sketchNameArray count] == 0) || (index >= [self.sketchNameArray count])) {
-        return nil;
-    }
-    [self.pageControl setCurrentPage: index];
-    return [self.viewControllers objectAtIndex:index];
-}
-
-// Returns index of viewController
-- (NSUInteger)indexOfViewController:(SketchViewController *)viewController{
-    return [self.sketchNameArray indexOfObject:viewController.dataObject];
-}
-
-// Returns viewController before viewController
-- (UIViewController *)pageViewController: (UIPageViewController *)pageViewController viewControllerBeforeViewController: (UIViewController *)viewController{
-    NSUInteger index = [self indexOfViewController:(SketchViewController *)viewController];
-    if ((index == 0) || (index == NSNotFound)) {
-        return nil;
-    }
-    
-    index--;
-    
-    [self.pageControl setCurrentPage: index];
-    return [self viewControllerAtIndex:index];
-}
-
-// Returns viewController after viewController
-- (UIViewController *)pageViewController: (UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
-    NSUInteger index = [self indexOfViewController: (SketchViewController *)viewController];
-    if (index == NSNotFound) {
-        return nil;
-    }
-    
-    index++;
-    if (index == [self.sketchNameArray count]) {
-        return nil;
-    }
-    
-    [self.pageControl setCurrentPage: index];
-    return [self viewControllerAtIndex:index];
 }
 
 - (void)openSettingsPressed {
     SettingsViewController *settingsView = [[SettingsViewController alloc] init];
-    [settingsView setRed:self.red andGreen:self.green andBlue:self.blue andOpacity:self.opacity andDiameter:self.diameter];
+    [settingsView setRed:self.red andGreen:self.green andBlue:self.blue andOpacity:self.opacity andDiameter:self.diameter andFrameRate:self.frameRate];
     [settingsView setDelegate:self];
     [self.navigationController pushViewController:settingsView animated:YES];
 }
@@ -215,6 +196,8 @@
     self.blue = ((SettingsViewController*)sender).blue;
     self.opacity = ((SettingsViewController*)sender).opacity;
     self.diameter = ((SettingsViewController*)sender).diameter;
+    self.frameRate = ((SettingsViewController*)sender).frameRate;
+
     [self.navigationController popViewControllerAnimated:YES];
     
     for (SketchViewController *sketchView in self.viewControllers) {
@@ -231,7 +214,7 @@
     sketchView.dataObject = sketchName;
     [sketchView setRed:self.red andGreen:self.green andBlue:self.blue andOpacity:self.opacity andDiameter:self.diameter];
     [self.viewControllers addObject:sketchView];
-
+    
     [self.pageControl setNumberOfPages:[self.sketchNameArray count]];
 }
 
@@ -239,23 +222,25 @@
 - (void)saveSketchPressed {
     NSUInteger count = [self.viewControllers count];
     for (int i = 0; i < count; i++) {
-    
+        
         SketchViewController *vc = [self.viewControllers objectAtIndex:i];
         UIGraphicsBeginImageContextWithOptions(vc.mainSketchView.bounds.size, NO,0.0);
         [vc.mainSketchView.image drawInRect:CGRectMake(0, 0, vc.mainSketchView.frame.size.width, vc.mainSketchView.frame.size.height)];
         UIImage *saveSketch = UIGraphicsGetImageFromCurrentImageContext();
         UIGraphicsEndImageContext();
-    
+        
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         [library writeImageToSavedPhotosAlbum:[saveSketch CGImage] metadata:nil completionBlock:^(NSURL *assetURL, NSError *error){
             if (error) {
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Please try again" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
-                [alert show];
+                if (i == count - 1) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!" message:@"Pardon my mistake. Would you mind trying again?" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
+                    [alert show];
+                }
             } else {
                 [self.sketchURLArray addObject: [assetURL absoluteString]];
                 if (i == count - 1) {
                     [self.delegate storeSketchURL:self];
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success" message:@"Project saved" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your masterpiece is in the archives." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
                     [alert show];
                 }
             }
@@ -263,20 +248,58 @@
     }
 }
 
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+// Returns viewController at given index
+- (SketchViewController *)viewControllerAtIndex:(NSUInteger)index {
+    if (([self.sketchNameArray count] == 0) || (index >= [self.sketchNameArray count])) {
+        return nil;
+    }
+    return [self.viewControllers objectAtIndex:index];
 }
-*/
+
+// Returns index of viewController
+- (NSUInteger)indexOfViewController:(SketchViewController *)viewController{
+    return [self.sketchNameArray indexOfObject:viewController.dataObject];
+}
+
+#pragma mark - UIPageViewControllerDataSource Methods
+
+// Returns viewController before viewController
+- (UIViewController *)pageViewController: (UIPageViewController *)pageViewController viewControllerBeforeViewController: (UIViewController *)viewController{
+    NSUInteger index = [self indexOfViewController:(SketchViewController *)viewController];
+    if ((index == 0) || (index == NSNotFound)) {
+        return nil;
+    }
+    index--;
+    return [self viewControllerAtIndex:index];
+}
+
+// Returns viewController after viewController
+- (UIViewController *)pageViewController: (UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
+    NSUInteger index = [self indexOfViewController: (SketchViewController *)viewController];
+    if (index == NSNotFound) {
+        return nil;
+    }
+    index++;
+    if (index == [self.sketchNameArray count]) {
+        return nil;
+    }
+    return [self viewControllerAtIndex:index];
+}
+
+#pragma mark - UIPageViewControllerDelegate Methods
+
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed {
+    if (completed) {
+        NSInteger index = [self indexOfViewController: [[pageViewController viewControllers] lastObject]];
+        [self.pageControl setCurrentPage: index];
+    }
+}
+
 
 @end
