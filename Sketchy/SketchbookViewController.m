@@ -238,18 +238,22 @@
 
 // Adds a new sketch view
 // Possible TODO:
-//  - Ask if desire to copy previous frame
 //  - Insert after current frame
 //  - Update names of all frames
 - (void) addSketchView {
-    NSString *sketchName = [NSString stringWithFormat:@"Frame: %i",(int)[self.sketchNameArray count]];
+    NSUInteger count = [self.sketchNameArray count];
+    NSString *sketchName = [NSString stringWithFormat:@"Frame: %lu",count];
     [self.sketchNameArray addObject: sketchName];
     
     SketchViewController *sketchView = [[SketchViewController alloc] init];
     sketchView.dataObject = sketchName;
     [sketchView setRed:self.red andGreen:self.green andBlue:self.blue andOpacity:self.opacity andDiameter:self.diameter];
+    sketchView.isErasing = self.isErasing;
+    if (count > 0) {
+        UIImage *image = ((SketchViewController *)[self.viewControllers objectAtIndex:(count-1)]).drawLayer.image;
+        [sketchView.drawLayer setImage: image];
+    }
     [self.viewControllers addObject:sketchView];
-    
     [self.pageControl setNumberOfPages:[self.sketchNameArray count]];
 }
 

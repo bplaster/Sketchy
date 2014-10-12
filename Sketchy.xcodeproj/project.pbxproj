@@ -15,6 +15,7 @@
 		1A3D241A19E2150000845A1C /* GalleryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A3D241819E2150000845A1C /* GalleryViewController.m */; };
 		1A3D241B19E2150000845A1C /* GalleryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A3D241919E2150000845A1C /* GalleryViewController.xib */; };
 		1A3D241D19E232D300845A1C /* placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 1A3D241C19E232D300845A1C /* placeholder.png */; };
+		1A55BFEB19EA06B8009D865E /* sketchyTutorial.mov in Resources */ = {isa = PBXBuildFile; fileRef = 1A55BFEA19EA06B8009D865E /* sketchyTutorial.mov */; };
 		1A57EC1E19E859A700038BAD /* backgroundWhite.JPG in Resources */ = {isa = PBXBuildFile; fileRef = 1A57EC1D19E859A700038BAD /* backgroundWhite.JPG */; };
 		1A764AF719E04BB900EA6EBF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A764AF619E04BB900EA6EBF /* main.m */; };
 		1A764AFA19E04BB900EA6EBF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A764AF919E04BB900EA6EBF /* AppDelegate.m */; };
@@ -27,7 +28,6 @@
 		1A764B1D19E04C5900EA6EBF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A764B1C19E04C5900EA6EBF /* CoreGraphics.framework */; };
 		1A764B1F19E04CA300EA6EBF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A764B1E19E04CA300EA6EBF /* Foundation.framework */; };
 		1A764B2319E04E7300EA6EBF /* SketchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A764B2119E04E7300EA6EBF /* SketchViewController.m */; };
-		1A84A9EF19E87EB8006194EB /* sketchyTutorial.mov in Resources */ = {isa = PBXBuildFile; fileRef = 1A84A9EE19E87EB8006194EB /* sketchyTutorial.mov */; };
 		1A9374F919E635060072E87A /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A9374F719E635060072E87A /* SettingsViewController.m */; };
 		1A9374FA19E635060072E87A /* SettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1A9374F819E635060072E87A /* SettingsViewController.xib */; };
 		1AC4453B19E9E405001A0695 /* eraser.png in Resources */ = {isa = PBXBuildFile; fileRef = 1AC4453919E9E405001A0695 /* eraser.png */; };
@@ -56,6 +56,7 @@
 		1A3D241819E2150000845A1C /* GalleryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GalleryViewController.m; sourceTree = "<group>"; };
 		1A3D241919E2150000845A1C /* GalleryViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GalleryViewController.xib; sourceTree = "<group>"; };
 		1A3D241C19E232D300845A1C /* placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholder.png; sourceTree = "<group>"; };
+		1A55BFEA19EA06B8009D865E /* sketchyTutorial.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = sketchyTutorial.mov; sourceTree = "<group>"; };
 		1A57EC1D19E859A700038BAD /* backgroundWhite.JPG */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = backgroundWhite.JPG; sourceTree = "<group>"; };
 		1A764AF119E04BB900EA6EBF /* Sketchy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sketchy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1A764AF519E04BB900EA6EBF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -75,7 +76,6 @@
 		1A764B1E19E04CA300EA6EBF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1A764B2019E04E7300EA6EBF /* SketchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SketchViewController.h; sourceTree = "<group>"; };
 		1A764B2119E04E7300EA6EBF /* SketchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SketchViewController.m; sourceTree = "<group>"; };
-		1A84A9EE19E87EB8006194EB /* sketchyTutorial.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = sketchyTutorial.mov; sourceTree = "<group>"; };
 		1A9374F619E635060072E87A /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
 		1A9374F719E635060072E87A /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		1A9374F819E635060072E87A /* SettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsViewController.xib; sourceTree = "<group>"; };
@@ -132,7 +132,7 @@
 		1A764AF319E04BB900EA6EBF /* Sketchy */ = {
 			isa = PBXGroup;
 			children = (
-				1A84A9EE19E87EB8006194EB /* sketchyTutorial.mov */,
+				1A55BFEA19EA06B8009D865E /* sketchyTutorial.mov */,
 				1A11FFBB19E47395002BCB4C /* palette.png */,
 				1A11FFB719E46BCF002BCB4C /* back.png */,
 				1A11FFB519E46B0C002BCB4C /* save.png */,
@@ -279,7 +279,7 @@
 				1A764B0519E04BB900EA6EBF /* LaunchScreen.xib in Resources */,
 				1AC4453C19E9E405001A0695 /* pencil.png in Resources */,
 				1AC4453B19E9E405001A0695 /* eraser.png in Resources */,
-				1A84A9EF19E87EB8006194EB /* sketchyTutorial.mov in Resources */,
+				1A55BFEB19EA06B8009D865E /* sketchyTutorial.mov in Resources */,
 				1A11FFB819E46BCF002BCB4C /* back.png in Resources */,
 				1A11FFBC19E47395002BCB4C /* palette.png in Resources */,
 				1A764B0219E04BB900EA6EBF /* Images.xcassets in Resources */,

@@ -15,6 +15,8 @@
 @property (strong, nonatomic) UIImageView *tempLayer;
 @property (assign, nonatomic) BOOL isErasing;
 @property (assign, nonatomic) BOOL savedSinceLastEdit;
+@property (strong, nonatomic) UIImageView *drawLayer;
+
 
 - (UIImage *) getImage;
 - (void)setRed:(CGFloat)r andGreen:(CGFloat)g andBlue:(CGFloat)b andOpacity:(CGFloat)o andDiameter:(CGFloat)d;

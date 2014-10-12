@@ -19,7 +19,6 @@
 @property (assign, nonatomic) CGFloat opacity;
 @property (assign, nonatomic) BOOL isContinuousStroke;
 @property (strong, nonatomic) UIImageView *backgroundLayer;
-@property (strong, nonatomic) UIImageView *drawLayer;
 
 @end
 
