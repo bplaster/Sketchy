@@ -16,7 +16,10 @@
 @property (nonatomic, strong) NSString *saveResult;
 @property (nonatomic, strong) UIBarButtonItem *playButton;
 @property (nonatomic, strong) UIBarButtonItem *stopButton;
+@property (nonatomic, strong) UIBarButtonItem *pencilButton;
+@property (nonatomic, strong) UIBarButtonItem *eraserButton;
 @property (nonatomic, assign) BOOL isPlaying;
+@property (nonatomic, assign) BOOL isErasing;
 @property (nonatomic, strong) UIPageControl *pageControl;
 
 // Pen properties
@@ -45,7 +48,11 @@
         
         UIBarButtonItem *saveButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"save.png"] style:UIBarButtonItemStylePlain target:self action:@selector(saveSketchPressed)];
         
-        [self.navigationItem setRightBarButtonItems:@[saveButton, settingsButton]];
+        self.pencilButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"pencil.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pencilEraser)];
+        
+        self.eraserButton = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"eraser.png"] style:UIBarButtonItemStylePlain target:self action:@selector(pencilEraser)];
+        
+        [self.navigationItem setRightBarButtonItems:@[saveButton, settingsButton, self.eraserButton]];
         
         // Set up Toolbar
         UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addSketchView)];
@@ -58,27 +65,15 @@
     return self;
 }
 
-- (void) backButtonPressed {
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hmmm" message:@"Care to save your work?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Yes", @"No", nil];
-    alert.tag = 1;
-    [alert show];
-}
-
--(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    if (alertView.tag == 1) {
-        if (buttonIndex == 0) {
-            [self saveSketchPressed];
-        }
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }
-}
-
 - (void) viewWillAppear:(BOOL)animated{
     [self.navigationController setToolbarHidden:NO];
 }
 
 - (void) viewWillDisappear:(BOOL)animated{
     [self.navigationController setToolbarHidden:YES animated:animated];
+    if (self.isPlaying) {
+        [self playStop];
+    }
 }
 
 - (void)viewDidLoad {
@@ -97,7 +92,9 @@
     self.blue = 0.0/255.0;
     self.diameter = 10.0;
     self.opacity = 1.0;
-    self.frameRate = 20;
+    self.frameRate = 5.0;
+    self.isPlaying = NO;
+    self.isErasing = NO;
     
     // Add pagecontrol display
     self.pageControl = [[UIPageControl alloc] init];
@@ -140,8 +137,6 @@
     CGFloat pcWidth = self.navigationController.toolbar.bounds.size.width;
     CGFloat pcHeight = self.navigationController.toolbar.bounds.size.height;
     [self.pageControl setFrame:CGRectMake(pcX, pcY, pcWidth, pcHeight)];
-    [self.pageControl setCurrentPageIndicatorTintColor:[UIColor colorWithHue:0.6 saturation:1 brightness:1 alpha:1]];
-    [self.pageControl setPageIndicatorTintColor:[UIColor colorWithHue:0.6 saturation:1 brightness:1 alpha:0.5]];
     [self.pageControl setUserInteractionEnabled:NO];
     [self.navigationController.toolbar addSubview:self.pageControl];
     
@@ -149,10 +144,6 @@
     for (UIGestureRecognizer *gest in self.pageController.gestureRecognizers) {
         [self.navigationController.toolbar addGestureRecognizer:gest];
     }
-    
-    // Other setup
-    self.isPlaying = NO;
-    [self viewControllerAtIndex:0];
 }
 
 // Plays the animation
@@ -162,25 +153,65 @@
         self.isPlaying = NO;
         [itemsArray setObject:self.playButton atIndexedSubscript:0];
         SketchViewController *currView = [self viewControllerAtIndex:self.pageControl.currentPage];
-        [currView.tempSketchView stopAnimating];
-        [currView.tempSketchView setImage:nil];
-        [currView.mainSketchView setHidden:NO];
+        [currView.tempLayer stopAnimating];
+        [currView.tempLayer setImage:nil];
     } else {
         self.isPlaying = YES;
         [itemsArray setObject:self.stopButton atIndexedSubscript:0];
         NSMutableArray *imageArray = [[NSMutableArray alloc] init];
         for (SketchViewController *sketchView in self.viewControllers) {
-            [imageArray addObject:sketchView.mainSketchView.image];
+            [imageArray addObject:[sketchView getImage]];
         }
         SketchViewController *currView = [self viewControllerAtIndex:self.pageControl.currentPage];
-        [currView.mainSketchView setHidden:YES];
-        [currView.tempSketchView setAnimationImages:imageArray];
-        [currView.tempSketchView setAnimationDuration:imageArray.count/self.frameRate];
+        [currView.tempLayer setAnimationImages:imageArray];
+        [currView.tempLayer setAnimationDuration:imageArray.count/self.frameRate];
         //[currView.tempSketchView setAnimationRepeatCount:1];
-        [currView.tempSketchView startAnimating];
+        [currView.tempLayer startAnimating];
     }
     [self.navigationController.toolbar setItems:itemsArray animated:YES];
+}
 
+// Switches between pencil and eraser
+- (void) pencilEraser {
+    NSMutableArray* itemsArray = [[NSMutableArray alloc] initWithArray:self.navigationItem.rightBarButtonItems];
+    if (self.isErasing) {
+        self.isErasing = NO;
+        [itemsArray setObject:self.eraserButton atIndexedSubscript:[itemsArray indexOfObject:self.pencilButton]];
+    } else {
+        self.isErasing = YES;
+        [itemsArray setObject:self.pencilButton atIndexedSubscript:[itemsArray indexOfObject:self.eraserButton]];
+    }
+    [self.navigationItem setRightBarButtonItems:itemsArray];
+    
+    for (SketchViewController *sketchView in self.viewControllers) {
+        [sketchView setIsErasing:self.isErasing];
+    }
+}
+
+- (void) backButtonPressed {
+    BOOL needsSaving = NO;
+    for (SketchViewController *sketchView in self.viewControllers) {
+        if (!sketchView.savedSinceLastEdit) {
+            needsSaving = YES;
+        }
+    }
+    if (needsSaving) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Hmmm" message:@"Care to save your work?" delegate:self cancelButtonTitle:nil otherButtonTitles:@"Yes", @"No", nil];
+        alert.tag = 1;
+        [alert show];
+    } else {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+  
+}
+
+-(void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if (alertView.tag == 1) {
+        if (buttonIndex == 0) {
+            [self saveSketchPressed];
+        }
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 - (void)openSettingsPressed {
@@ -206,6 +237,10 @@
 }
 
 // Adds a new sketch view
+// Possible TODO:
+//  - Ask if desire to copy previous frame
+//  - Insert after current frame
+//  - Update names of all frames
 - (void) addSketchView {
     NSString *sketchName = [NSString stringWithFormat:@"Frame: %i",(int)[self.sketchNameArray count]];
     [self.sketchNameArray addObject: sketchName];
@@ -224,27 +259,28 @@
     for (int i = 0; i < count; i++) {
         
         SketchViewController *vc = [self.viewControllers objectAtIndex:i];
-        UIGraphicsBeginImageContextWithOptions(vc.mainSketchView.bounds.size, NO,0.0);
-        [vc.mainSketchView.image drawInRect:CGRectMake(0, 0, vc.mainSketchView.frame.size.width, vc.mainSketchView.frame.size.height)];
-        UIImage *saveSketch = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
         
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library writeImageToSavedPhotosAlbum:[saveSketch CGImage] metadata:nil completionBlock:^(NSURL *assetURL, NSError *error){
-            if (error) {
-                if (i == count - 1) {
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!" message:@"Pardon my mistake. Would you mind trying again?" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
-                    [alert show];
+        if (!vc.savedSinceLastEdit) {
+            UIImage *saveSketch = [vc getImage];
+            
+            ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+            [library writeImageToSavedPhotosAlbum:[saveSketch CGImage] metadata:nil completionBlock:^(NSURL *assetURL, NSError *error){
+                if (error) {
+                    if (i == count - 1) {
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Oops!" message:@"Pardon my mistake. Would you mind trying again?" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
+                        [alert show];
+                    }
+                } else {
+                    [self.sketchURLArray setObject:[assetURL absoluteString] atIndexedSubscript:i];
+                    vc.savedSinceLastEdit = YES;
+                    if (i == count - 1) {
+                        [self.delegate storeSketchURL:self];
+                        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your masterpiece is in the archives." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
+                        [alert show];
+                    }
                 }
-            } else {
-                [self.sketchURLArray addObject: [assetURL absoluteString]];
-                if (i == count - 1) {
-                    [self.delegate storeSketchURL:self];
-                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Success!" message:@"Your masterpiece is in the archives." delegate:nil cancelButtonTitle:nil otherButtonTitles:@"Close", nil];
-                    [alert show];
-                }
-            }
-        }];
+            }];
+        }
     }
 }
 

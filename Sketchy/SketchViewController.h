@@ -12,9 +12,11 @@
 @interface SketchViewController : UIViewController
 @property (strong, nonatomic) id dataObject;
 @property (nonatomic, strong) NSMutableArray *sketchURL;
-@property (strong, nonatomic) IBOutlet UIImageView *mainSketchView;
-@property (strong, nonatomic) IBOutlet UIImageView *tempSketchView;
+@property (strong, nonatomic) UIImageView *tempLayer;
+@property (assign, nonatomic) BOOL isErasing;
+@property (assign, nonatomic) BOOL savedSinceLastEdit;
 
+- (UIImage *) getImage;
 - (void)setRed:(CGFloat)r andGreen:(CGFloat)g andBlue:(CGFloat)b andOpacity:(CGFloat)o andDiameter:(CGFloat)d;
 
 @end

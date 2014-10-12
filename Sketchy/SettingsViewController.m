@@ -40,7 +40,7 @@
         self.blue = 0.0/255.0;
         self.diameter = 10.0;
         self.opacity = 1.0;
-        self.frameRate = 20.0;
+        self.frameRate = 5.0;
     }
     return self;
 }

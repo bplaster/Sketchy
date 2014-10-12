@@ -7,11 +7,13 @@
 //
 
 #import "ViewController.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 @interface ViewController ()
 
 @property (nonatomic, strong) NSString *savedSketchbookNamesArrayKey;
 @property (nonatomic, strong) NSString *savedSketchbooksDictionaryKey;
+@property (nonatomic, strong) UIColor *color;
 
 
 @end
@@ -22,6 +24,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
+    // Set up Style
+    self.color = [[UIColor alloc] initWithRed:0 green:0 blue:0 alpha:1];
+    [[UINavigationBar appearance] setTintColor:self.color];
+    [[UIToolbar appearance] setTintColor:self.color];
+    [[UIPageControl appearance] setCurrentPageIndicatorTintColor:self.color];
+    [[UIPageControl appearance] setPageIndicatorTintColor:[self.color colorWithAlphaComponent:0.5]];
+    
+    // Names of storage
     self.savedSketchbookNamesArrayKey = @"sketchbookNames";
     self.savedSketchbooksDictionaryKey = @"sketchbooksDictionary";
 }
@@ -31,6 +41,7 @@
     SketchbookViewController *newSketchbookView = [[SketchbookViewController alloc] init];
     [newSketchbookView setDelegate:self];
     UINavigationController *sketchNav = [[UINavigationController alloc] initWithRootViewController:newSketchbookView];
+    
     [self presentViewController:sketchNav animated:YES completion:nil];
 }
 
@@ -42,6 +53,13 @@
     GalleryTableViewController *galleryTableView = [[GalleryTableViewController alloc] initWithArray:savedSketchbookNamesArray andDictionary:savedSketchbooksDictionary];
     UINavigationController *galleryNav = [[UINavigationController alloc] initWithRootViewController:galleryTableView];
     [self presentViewController:galleryNav animated:YES completion:nil];
+}
+
+- (IBAction)tutorialSketchbookPressed:(id)sender {
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"sketchyTutorial" ofType:@"mov"]];
+    MPMoviePlayerViewController *mpvController = [[MPMoviePlayerViewController alloc] initWithContentURL:url];
+    [self presentViewController:mpvController animated:YES completion:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning {
